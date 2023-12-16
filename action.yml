@@ -60,7 +60,7 @@ runs:
       run: |
         sudo apt-get install lua5.3
 
-        LIB_PATH="${{ github.action_path }}/lib
+        LIB_PATH="${{ github.action_path }}/lib"
         echo "lib_path=$LIB_PATH" >> "$GITHUB_ENV"
 
     - name: Run config builder
