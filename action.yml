@@ -59,16 +59,21 @@ runs:
       shell: bash
       run: |
         sudo apt-get install lua5.3
-        mkdir -pv /usr/local/lib/lua/5.3
-        mv -v ${{ github.action_path }}/lib /usr/local/lib/lua/5.3
 
     - name: Run config builder
       shell: bash
       run: |
         cd ${{ github.action_path }}
 
+        CONFIG_GENERATOR="${{ github.action_path }}/config.lua"
+
+        LIB_PATH=";${{ github.action_path }}/lib/?.lua"
+        PACKAGE_PATH="package.path = package.path .. \"$LIB_PATH\""
+        printf '%s\n%s\n' "$PACKAGE_PATH" "$(cat $CONFIG_GENERATOR)" >"$CONFIG_GENERATOR"
+        cat "$CONFIG_GENERATOR"
+
         set +e
-        CONFIG_OUTPUT=$(lua5.3 ${{ github.action_path }}/config.lua \
+        CONFIG_OUTPUT=$(lua5.3 "$CONFIG_GENERATOR" \
             "${{ inputs.config }}" \
             '${{ inputs.title }}' \
             '${{ inputs.type }}' \
@@ -91,6 +96,13 @@ runs:
     - name: Run gma packer
       shell: bash
       run: |
+        BUILDER="${{ github.action_path }}/gma.lua"
+
+        LIB_PATH=";${{ github.action_path }}/lib/?.lua"
+        PACKAGE_PATH="package.path = package.path .. \"$LIB_PATH\""
+        printf '%s\n%s\n' "$PACKAGE_PATH" "$(cat $BUILDER)" >"$BUILDER"
+        cat "$BUILDER"
+
         lua5.3 ${{ github.action_path }}/gma.lua ${{ inputs.id }}.gma "${{ github.action_path }}/$config_file"
 
     - name: Create .vdf file
