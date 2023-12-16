@@ -1,6 +1,6 @@
 local libPath = "{{LIB_PATH}}"
 if libPath ~= "{{LIB" .. "_PATH}}" then
-    package.path = package.path .. ";" .. libPath
+    package.path = package.path .. ";" .. libPath .. "/?.lua"
 end
 
 local safeCall = require( "lib/runner" )
