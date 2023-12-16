@@ -3,7 +3,7 @@ local ADDON_JSON = assert(arg[2], "Missing argument #2 (path to addon.json)")
 local PATH_SEP = package.config:sub(1,1)
 
 local function read(path --[[@param path string]]) ---@return string
-	local handle = assert(io.open(path, "rb"))
+	local handle = assert(io.open(path, "rb"), "Couldn't read config file at " .. path)
 	local content = handle:read("*a")
 	handle:close()
 	return content
