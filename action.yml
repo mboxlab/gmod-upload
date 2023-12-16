@@ -131,10 +131,12 @@ runs:
           }
         EOF
 
+        cat $GITHUB_WORKSPACE/project/workshop.vdf
+
     - name: Run SteamCMD
       shell: bash
       run: |
-        ~/Steam/steamcmd.sh +login $STEAM_USERNAME $STEAM_PASSWORD +workshop_build_item `pwd -P`/workshop.vdf +quit
+        ~/Steam/steamcmd.sh +login $STEAM_USERNAME $STEAM_PASSWORD +workshop_build_item $GITHUB_WORKSPACE/project/workshop.vdf +quit
 
     - name: Print Errors
       if: failure()
