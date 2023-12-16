@@ -69,7 +69,7 @@ runs:
         cd ${{ github.action_path }}
 
         BUILDER="${{ github.action_path }}/config.lua"
-        sed -i "s/{{LIB_PATH}}/$lib_path/g" $BUILDER
+        sed -i "s~{{LIB_PATH}}~$lib_path~g" $BUILDER
         cat $BUILDER
 
         set +e
@@ -97,7 +97,7 @@ runs:
       shell: bash
       run: |
         BUILDER="${{ github.action_path }}/gma.lua"
-        sed -i "s/{{LIB_PATH}}/$lib_path/g" $BUILDER
+        sed -i "s~{{LIB_PATH}}~$lib_path~g" $BUILDER
         cat $BUILDER
 
         lua5.3 $BUILDER ${{ inputs.id }}.gma "${{ github.action_path }}/$config_file"
