@@ -58,12 +58,12 @@ runs:
     - name: Download Lua 5.3
       shell: bash
       run: |
-        sudo apt-get install lua5.3 && \
-        mv -v ./lib /usr/local/share/lua/5.3/
+        sudo apt-get install lua5.3
 
     - name: Run config builder
       shell: bash
       run: |
+        cd ${{ github.action_path }}
         CONFIG=$(lua5.3 ${{ github.action_path }}/config.lua "${{ inputs.config }}" '${{ inputs.title }}' '${{ inputs.type }}' '${{ inputs.tag1 }}' '${{ inputs.tag2 }}' '${{ inputs.tag3 }}')
         echo "config_file=$CONFIG" >> "$GITHUB_ENV"
 
