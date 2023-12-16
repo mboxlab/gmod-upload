@@ -89,6 +89,7 @@ runs:
     - name: Run gma packer
       shell: bash
       run: |
+        cd ${{ github.action_path }}
         lua5.3 ${{ github.action_path }}/gma.lua ${{ inputs.id }}.gma "${{ github.action_path }}/$config_file"
 
     - name: Create .vdf file
