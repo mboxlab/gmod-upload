@@ -60,14 +60,17 @@ runs:
       run: |
         sudo apt-get install lua5.3
 
+        LIB_PATH="package.path = package.path .. \";${{ github.action_path }}/lib/?.lua\""
+        echo "lib_path=$LIB_PATH" >> "$GITHUB_ENV"
+
     - name: Run config builder
       shell: bash
       run: |
         cd ${{ github.action_path }}
 
         BUILDER="${{ github.action_path }}/config.lua"
-        LIB_PATH="package.path = package.path .. \";${{ github.action_path }}/lib/?.lua\""
-        echo -e "$LIB_PATH\n$(cat $BUILDER)" > "$BUILDER"
+        echo -e "$lib_path\n$(cat $BUILDER)" > "$BUILDER"
+        cat "$BUILDER"
 
         set +e
         CONFIG_OUTPUT=$(lua5.3 "$BUILDER" \
@@ -94,8 +97,8 @@ runs:
       shell: bash
       run: |
         BUILDER="${{ github.action_path }}/gma.lua"
-        LIB_PATH="package.path = package.path .. \";${{ github.action_path }}/lib/?.lua\""
-        echo -e "$LIB_PATH\n$(cat $BUILDER)" > "$BUILDER"
+        echo -e "$lib_path\n$(cat $BUILDER)" > "$BUILDER"
+        cat "$BUILDER"
 
         lua5.3 "$BUILDER" ${{ inputs.id }}.gma "${{ github.action_path }}/$config_file"
 
