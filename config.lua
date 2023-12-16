@@ -23,7 +23,7 @@ local TITLE = assert(arg[2], "No title given")
 local TYPE = assert(arg[3], "No type given")
 do
 	local valid = makeLookup({ "ServerContent", "gamemode", "map", "weapon", "vehicle", "npc", "tool", "effects", "model", "entity" })
-	assert(valid[TYPE], "Invalid type given: " .. TYPE)
+	assert(valid[TYPE], "Invalid 'type' option: " .. TYPE)
 end
 
 local TAGS = {}
@@ -35,7 +35,7 @@ do
 		if not tag then return end
 		if tag == "" then return end
 
-		assert(valid[tag], "Invalid tag given: " .. tag)
+		assert(valid[tag], "Invalid tag: " .. tag)
 		if added[tag] then return end
 
 		table.insert(TAGS, tag)
