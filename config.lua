@@ -28,7 +28,7 @@ local function loadConfig()
         local valid = makeLookup( {
             "ServerContent", "gamemode", "map", "weapon", "vehicle", "npc", "tool", "effects", "model", "entity"
         } )
-        assert( valid[TYPE], "Invalid 'type' input: " .. TYPE )
+        assert( valid[TYPE], "Invalid type input: '" .. TYPE .. "'" )
     end
 
     local TAGS = {}
