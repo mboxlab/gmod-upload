@@ -87,8 +87,9 @@ runs:
 
         CONFIG_INPUT=${{ inputs.config }}
         if [ -n "$CONFIG_INPUT" ]; then
-          echo "config_file=$CONFIG_INPUT" >> "$GITHUB_ENV"
+          echo "config_file=$GITHUB_WORKSPACE/project/$CONFIG_INPUT" >> "$GITHUB_ENV"
           echo "::notice title=Config file input provided, ignoring all other inputs::$CONFIG_INPUT"
+          cat $config_file
           exit 0
         fi
 
@@ -109,6 +110,7 @@ runs:
         else
           # Set the path of the generated addon json in the local environment
           echo "config_file=${{ github.action_path }}/$CONFIG_OUTPUT" >> "$GITHUB_ENV"
+          cat ${{ github.action_path }}/$CONFIG_OUTPUT
         fi
 
     - name: Run gma packer
@@ -118,7 +120,7 @@ runs:
         pwd
         ls -alh
         echo "Running GMA with config file: $config_file"
-        lua5.3 ${{ github.action_path }}/gma.lua ${{ inputs.id }}.gma "$config_file"
+        echo $(lua5.3 ${{ github.action_path }}/gma.lua ${{ inputs.id }}.gma "$config_file")
 
     - name: Create .vdf file
       shell: bash
