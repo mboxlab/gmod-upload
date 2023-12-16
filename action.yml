@@ -16,7 +16,31 @@ inputs:
   config:
     description: "Path of addon.json, or json file to treat as such."
     required: false
-    default: "addon.json"
+    default: ""
+  title:
+    description: "The name of the Workshop item"
+    required: false
+    default: ""
+  type:
+    # One of: ServerContent, Gamemode, Map, Weapon, Vehicle, NPC, Tool, Effects, Model, Entity
+    description: "The type of addon"
+    required: false
+    default: "ServerContent"
+  tag1:
+    # One of: fun, roleplay, scenic, movie, realism, cartoon, water, comic, build
+    description: "First addon tag"
+    required: false
+    default: "build"
+  tag2:
+    # One of: fun, roleplay, scenic, movie, realism, cartoon, water, comic, build
+    description: "Second addon tag"
+    required: false
+    default: ""
+  tag3:
+    # One of: fun, roleplay, scenic, movie, realism, cartoon, water, comic, build
+    description: "Third addon tag"
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -35,6 +59,17 @@ runs:
       shell: bash
       run: |
         sudo apt-get install lua5.3
+
+    - name: Run config builder
+      shell: bash
+      run: |
+        lua5.3 ${{ github.action_path }}/config.lua \
+                              "${{ inputs.config }}" \
+                              '${{ inputs.title }}' \
+                              '${{ inputs.type }}' \
+                              '${{ inputs.tag1 }}' \
+                              '${{ inputs.tag2 }}' \
+                              '${{ inputs.tag3 }}'
 
     - name: Run gma packer
       shell: bash
