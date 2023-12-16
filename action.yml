@@ -79,9 +79,9 @@ runs:
 
         # Handle a nonzero exit code as a lua error
         if [ "$CONFIG_EXIT_STATUS" -ne 0 ]; then
-            echo "$CONFIG_OUTPUT"
+            FIRST_LINE=`echo "${CONFIG_OUTPUT}" | head -1`
 
-            if [[ $CONFIG_OUTPUT =~ .*/(.*\.lua):([0-9]+):(.*) ]]; then
+            if [[ $FIRST_LINE =~ .*(.*\.lua):([0-9]+):(.*) ]]; then
                 FILE_NAME="${BASH_REMATCH[1]}"
                 LINE_NUMBER="${BASH_REMATCH[2]}"
                 ERROR_MESSAGE="${BASH_REMATCH[3]}"
