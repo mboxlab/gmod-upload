@@ -82,6 +82,8 @@ runs:
       shell: bash
       run: |
         cd ${{ github.action_path }}
+        pwd
+        ls -alh
 
         CONFIG_INPUT=${{ inputs.config }}
         if [ -n "$CONFIG_INPUT" ]; then
@@ -113,6 +115,9 @@ runs:
       shell: bash
       run: |
         cd $GITHUB_WORKSPACE/project
+        pwd
+        ls -alh
+        echo "Running GMA with config file: $config_file"
         lua5.3 ${{ github.action_path }}/gma.lua ${{ inputs.id }}.gma "$config_file"
 
     - name: Create .vdf file
