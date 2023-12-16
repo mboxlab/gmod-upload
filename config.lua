@@ -1,3 +1,4 @@
+package.path = package.path .. ";{{LIB_PATH}}/?.lua"
 local safeCall = require( "runner" )
 
 local function loadConfig()

@@ -60,7 +60,7 @@ runs:
       run: |
         sudo apt-get install lua5.3
 
-        LIB_PATH="package.path = package.path .. \";${{ github.action_path }}/lib/?.lua\""
+        LIB_PATH="${{ github.action_path }}/lib
         echo "lib_path=$LIB_PATH" >> "$GITHUB_ENV"
 
     - name: Run config builder
@@ -69,11 +69,11 @@ runs:
         cd ${{ github.action_path }}
 
         BUILDER="${{ github.action_path }}/config.lua"
-        echo -e "$lib_path\n$(cat $BUILDER)" > "$BUILDER"
-        cat "$BUILDER"
+        sed -i 's/{{LIB_PATH}}/$lib_path/g' $BUILDER
+        cat $BUILDER
 
         set +e
-        CONFIG_OUTPUT=$(lua5.3 "$BUILDER" \
+        CONFIG_OUTPUT=$(lua5.3 $BUILDER \
             "${{ inputs.config }}" \
             '${{ inputs.title }}' \
             '${{ inputs.type }}' \
@@ -97,10 +97,10 @@ runs:
       shell: bash
       run: |
         BUILDER="${{ github.action_path }}/gma.lua"
-        echo -e "$lib_path\n$(cat $BUILDER)" > "$BUILDER"
-        cat "$BUILDER"
+        sed -i 's/{{LIB_PATH}}/$lib_path/g' $BUILDER
+        cat $BUILDER
 
-        lua5.3 "$BUILDER" ${{ inputs.id }}.gma "${{ github.action_path }}/$config_file"
+        lua5.3 $BUILDER ${{ inputs.id }}.gma "${{ github.action_path }}/$config_file"
 
     - name: Create .vdf file
       shell: bash

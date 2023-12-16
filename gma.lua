@@ -1,3 +1,4 @@
+package.path = package.path .. ";{{LIB_PATH}}/?.lua"
 local safeCall = require("runner")
 
 local OUTPUT_FILE = assert(arg[1], "Missing argument #1 (output file)")
