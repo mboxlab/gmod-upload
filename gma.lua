@@ -212,6 +212,7 @@ local function main()
 						path = normalized:sub(3), -- strip initial ./ part
 						content = read(path)
 					}
+                    print("::notice title=Tracked file::" .. normalized, "\n")
 
 					goto cont
 				end
