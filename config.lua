@@ -1,7 +1,7 @@
-local safeCall = require( "lib/runner" )
+local safeCall = require( "runner" )
 
 local function loadConfig()
-    local json = require( "lib/json" )
+    local json = require( "json" )
 
     -- If a config file is given, we use that instead of building a new one
     local CONFIG_FILE = arg[1]

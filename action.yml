@@ -65,15 +65,12 @@ runs:
       run: |
         cd ${{ github.action_path }}
 
-        CONFIG_GENERATOR="${{ github.action_path }}/config.lua"
-
-        LIB_PATH=";${{ github.action_path }}/lib/?.lua"
-        PACKAGE_PATH="package.path = package.path .. \"$LIB_PATH\""
-        printf '%s\n%s\n' "$PACKAGE_PATH" "$(cat $CONFIG_GENERATOR)" >"$CONFIG_GENERATOR"
-        cat "$CONFIG_GENERATOR"
+        BUILDER="${{ github.action_path }}/config.lua"
+        LIB_PATH="package.path = package.path .. \";${{ github.action_path }}/lib/?.lua\""
+        echo -e "$LIB_PATH\n$(cat $BUILDER)" > "$BUILDER"
 
         set +e
-        CONFIG_OUTPUT=$(lua5.3 "$CONFIG_GENERATOR" \
+        CONFIG_OUTPUT=$(lua5.3 "$BUILDER" \
             "${{ inputs.config }}" \
             '${{ inputs.title }}' \
             '${{ inputs.type }}' \
@@ -97,13 +94,10 @@ runs:
       shell: bash
       run: |
         BUILDER="${{ github.action_path }}/gma.lua"
+        LIB_PATH="package.path = package.path .. \";${{ github.action_path }}/lib/?.lua\""
+        echo -e "$LIB_PATH\n$(cat $BUILDER)" > "$BUILDER"
 
-        LIB_PATH=";${{ github.action_path }}/lib/?.lua"
-        PACKAGE_PATH="package.path = package.path .. \"$LIB_PATH\""
-        printf '%s\n%s\n' "$PACKAGE_PATH" "$(cat $BUILDER)" >"$BUILDER"
-        cat "$BUILDER"
-
-        lua5.3 ${{ github.action_path }}/gma.lua ${{ inputs.id }}.gma "${{ github.action_path }}/$config_file"
+        lua5.3 "$BUILDER" ${{ inputs.id }}.gma "${{ github.action_path }}/$config_file"
 
     - name: Create .vdf file
       shell: bash
