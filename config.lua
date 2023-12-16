@@ -1,4 +1,4 @@
-local safeCall = require( "runner" )
+local safeCall = require( "lib/runner" )
 
 local function loadConfig()
     local json = require( "lib/json" )

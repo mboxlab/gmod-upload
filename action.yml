@@ -59,6 +59,7 @@ runs:
       shell: bash
       run: |
         sudo apt-get install lua5.3
+        mv -v ${{ github.action_path }}/lib /usr/local/share/lua/5.3/
 
     - name: Run config builder
       shell: bash
@@ -89,7 +90,9 @@ runs:
     - name: Run gma packer
       shell: bash
       run: |
+        pwd
         cd ${{ github.action_path }}
+        pwd
         lua5.3 ${{ github.action_path }}/gma.lua ${{ inputs.id }}.gma "${{ github.action_path }}/$config_file"
 
     - name: Create .vdf file
