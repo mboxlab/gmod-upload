@@ -117,15 +117,12 @@ runs:
       shell: bash
       run: |
         cd $GITHUB_WORKSPACE/project
-        pwd
-        ls -alh
-        echo "Running GMA with config file: $config_file"
-        lua5.3 ${{ github.action_path }}/gma.lua ${{ inputs.id }}.gma "$config_file"
+        lua5.3 ${{ github.action_path }}/gma.lua $GITHUB_WORKSPACE/project/${{ inputs.id }}.gma "$config_file"
 
     - name: Create .vdf file
       shell: bash
       run: |
-        cat > workshop.vdf << EOF
+        cat > $GITHUB_WORKSPACE/project/workshop.vdf << EOF
           "workshopitem" {
             "appid" "4000"
             "publishedfileid" "${{ inputs.id }}"

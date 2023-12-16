@@ -197,7 +197,6 @@ local function main()
 
 		for path in dir:lines() do
 			local normalized = path:gsub(PATH_SEP, "/") -- normalize
-			print("::notice title=Found file::" .. normalized, "\n")
 
 			for _, allow_pattern in ipairs(allowlist) do
 				if normalized:match(allow_pattern) then
@@ -212,7 +211,6 @@ local function main()
 						path = normalized:sub(3), -- strip initial ./ part
 						content = read(path)
 					}
-                    print("::notice title=Tracked file::" .. normalized, "\n")
 
 					goto cont
 				end
