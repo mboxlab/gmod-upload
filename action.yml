@@ -79,6 +79,8 @@ runs:
 
         # Handle a nonzero exit code as a lua error
         if [ "$CONFIG_EXIT_STATUS" -ne 0 ]; then
+            echo "$CONFIG_OUTPUT"
+
             if [[ $CONFIG_OUTPUT =~ .*/(.*\.lua):([0-9]+):(.*) ]]; then
                 FILE_NAME="${BASH_REMATCH[1]}"
                 LINE_NUMBER="${BASH_REMATCH[2]}"
@@ -88,15 +90,13 @@ runs:
                 echo "::error file=${FILE_NAME},line=${LINE_NUMBER}::${ERROR_MESSAGE}"
             fi
 
-            
             cat << 'EOF' >> $GITHUB_STEP_SUMMARY
-            ## :x: Failed to generate an addon.json!
-
-            ### Error
-            ```
-            $CONFIG_OUTPUT
-            ```
-            EOF
+            cat "## :x: Failed to generate an addon.json!" >> $GITHUB_STEP_SUMMARY
+            cat "" >> $GITHUB_STEP_SUMMARY
+            cat "### Error" >> $GITHUB_STEP_SUMMARY
+            cat "```" >> $GITHUB_STEP_SUMMARY
+            cat "$CONFIG_OUTPUT" >> $GITHUB_STEP_SUMMARY
+            cat "```" >> GITHUB_STEP_SUMMARY
 
             exit 1
         fi
