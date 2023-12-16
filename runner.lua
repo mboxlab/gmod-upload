@@ -1,14 +1,16 @@
-local function githubError( title, errorMessage )
-    local format = "::error title=%s::%s"
-    local message = string.format( format, title, errorMessage )
+local function githubError( title, result )
+    local fileName, lineNumber, errorMessage = result:match( "([^:]+):(%d+):.(.*)" )
 
+    local format = "::error file=%s,line=%s,title=%s::%s"
+    local message = string.format( format, fileName, lineNumber, title, errorMessage )
+
+    local stack = debug.traceback( errorMessage, 3 )
+    print( stack, "\n" )
     print( message )
-    error( errorMessage, 3 )
 end
 
 return function( f, title )
-    local ok, result = pcall( f )
-    if ok then return result end
-
-    githubError( title, result )
+    xpcall( f, function( err )
+        githubError( title, err )
+    end )
 end
