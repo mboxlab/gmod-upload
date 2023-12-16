@@ -81,7 +81,7 @@ runs:
         if [ "$CONFIG_EXIT_STATUS" -ne 0 ]; then
             FIRST_LINE=`echo "${CONFIG_OUTPUT}" | head -1`
 
-            if [[ $FIRST_LINE =~ .*(.*\.lua):([0-9]+):(.*) ]]; then
+            if [[ $FIRST_LINE =~ \s(.*\.lua):([0-9]+):.(.*) ]]; then
                 FILE_NAME="${BASH_REMATCH[1]}"
                 LINE_NUMBER="${BASH_REMATCH[2]}"
                 ERROR_MESSAGE="${BASH_REMATCH[3]}"
