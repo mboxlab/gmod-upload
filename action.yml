@@ -140,5 +140,3 @@ runs:
         echo
         echo ~/Steam/workshopbuilds/depot_build_4000.log
         echo "$(cat ~/Steam/workshopbuilds/depot_build_4000.log)"
-
-        exit 1
