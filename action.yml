@@ -79,6 +79,7 @@ runs:
         # Handle a nonzero exit code as a lua error
         if [ "$CONFIG_EXIT_STATUS" -ne 0 ]; then
           echo "$CONFIG_OUTPUT"
+          exit 1
         else
           # Set the path of the addon json in the local environment
           echo "config_file=$CONFIG_OUTPUT" >> "$GITHUB_ENV"
