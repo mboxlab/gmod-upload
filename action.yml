@@ -102,6 +102,11 @@ runs:
     - name: Run gma packer
       shell: bash
       run: |
+        echo "Running GMA Packer"
+        pwd
+        ls -alh
+
+        cd project
         rm -rf .git*
         lua5.3 ${{ github.action_path }}/gma.lua ${{ inputs.id }}.gma "$config_file"
 
