@@ -1,8 +1,8 @@
 local function githubError( title, result )
     local fileName, lineNumber, errorMessage = result:match( "([^:]+):(%d+):.(.*)" )
 
-    local format = "::error file=%s,line=%s,title=%s::%s"
-    local message = string.format( format, fileName, lineNumber, title, errorMessage )
+    local format = "::error title=%s::%s"
+    local message = string.format( format, title .. ":" .. errorMessage, fileName .. ":" .. lineNumber )
 
     local stack = debug.traceback( nil, 3 )
     print( stack, "\n" )
