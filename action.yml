@@ -126,7 +126,7 @@ runs:
           "workshopitem" {
             "appid" "4000"
             "publishedfileid" "${{ inputs.id }}"
-            "contentfolder" "`pwd`/${{ inputs.id }}.gma"
+            "contentfolder" "$GITHUB_WORKSPACE/project/${{ inputs.id }}.gma"
             "changenote" "${{ inputs.changelog }}"
           }
         EOF
