@@ -10,7 +10,11 @@ local function githubError( title, result )
 end
 
 return function( f, title )
-    xpcall( f, function( err )
+    local ok = xpcall( f, function( err )
         githubError( title, err )
     end )
+
+    if not ok then
+        os.exit( 1 )
+    end
 end
