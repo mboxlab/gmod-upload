@@ -45,7 +45,17 @@ inputs:
 runs:
   using: "composite"
   steps:
+
+    - name: Cehck if project is already cloned
+      run: |
+        if [ -d $GITHUB_WORKSPACE/project ]; then
+          echo "project_exists=true" >> $GITHUB_ENV
+        else
+          echo "project_exists=false" >> $GITHUB_ENV
+        fi
+
     - name: Checkout project
+      if: env.project_exists == 'false'
       uses: actions/checkout@v4
       with:
         path: project
@@ -102,12 +112,7 @@ runs:
     - name: Run gma packer
       shell: bash
       run: |
-        echo "Running GMA Packer"
-        pwd
-        ls -alh
-
-        cd project
-        rm -rf .git*
+        cd $GITHUB_WORKSPACE/project
         lua5.3 ${{ github.action_path }}/gma.lua ${{ inputs.id }}.gma "$config_file"
 
     - name: Create .vdf file
