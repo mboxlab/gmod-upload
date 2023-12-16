@@ -1,3 +1,5 @@
+local safeCall = require("runner")
+
 local OUTPUT_FILE = assert(arg[1], "Missing argument #1 (output file)")
 local ADDON_JSON = assert(arg[2], "Missing argument #2 (path to addon.json)")
 local PATH_SEP = package.config:sub(1,1)
@@ -89,9 +91,9 @@ local function wildcard2pattern(s --[[@param s string]])
 	return "^%./" .. s:gsub("%.", "%%."):gsub("%*", ".*") .. "$"
 end
 
-do
+local function main()
 	---@type { title: string?, description: string?, author: string?, ignore: string[]?, authors: string[]? }
-	local addon = assert( decode( read(ADDON_JSON) ), "Failed to parse addon.json file" )
+	local addon = assert( decode( read(ADDON_JSON) ), "Failed to parse: " .. ADDON_JSON )
 
 	---@type { path: string, content: string }[]
 	local files = {}
@@ -195,7 +197,7 @@ do
 				if normalized:match(allow_pattern) then
 					for _, block_pattern in ipairs(blocklist) do
 						if normalized:match(block_pattern) then
-							print("Blocked ", normalized)
+							print("::warning title=File blocked::Skipping '" .. normalized .. "'")
 							goto cont
 						end
 					end
@@ -209,14 +211,14 @@ do
 				end
 			end
 
-			print("Warning: File " .. normalized .. " not whitelisted. Skipping..")
+			print("::warning title=File not whitelisted::Skipping '" .. normalized .. "'")
 			::cont::
 		end
 
 		dir:close()
 	end
 
-	local handle = assert(io.open(OUTPUT_FILE, "wb"), "Failed to create/overwrite output file")
+	local handle = assert(io.open(OUTPUT_FILE, "wb"), "Failed to create/overwrite output file: " .. OUTPUT_FILE)
 	handle:write(
 		pack(
 			addon.title or "No title provided",
@@ -227,3 +229,5 @@ do
 	)
 	handle:close()
 end
+
+safeCall(main, "Failed to pack addon")
