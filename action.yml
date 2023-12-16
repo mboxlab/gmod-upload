@@ -106,6 +106,8 @@ runs:
         # Set the path of the addon json in the local environment
         echo "config_file=$CONFIG" >> "$GITHUB_ENV"
 
+        ls -alht
+
     - name: Run gma packer
       shell: bash
       run: |
