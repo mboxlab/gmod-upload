@@ -45,8 +45,8 @@ inputs:
 runs:
   using: "composite"
   steps:
-
-    - name: Cehck if project is already cloned
+    - name: Check if project is already cloned
+      shell: bash
       run: |
         if [ -d $GITHUB_WORKSPACE/project ]; then
           echo "project_exists=true" >> $GITHUB_ENV
