@@ -93,9 +93,9 @@ runs:
             echo "## :x: Failed to generate an addon.json!" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "### Error" >> $GITHUB_STEP_SUMMARY
-            echo "```" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
             echo "$CONFIG_OUTPUT" >> $GITHUB_STEP_SUMMARY
-            echo "```" >> GITHUB_STEP_SUMMARY
+            echo '```' >> GITHUB_STEP_SUMMARY
 
             exit 1
         fi
