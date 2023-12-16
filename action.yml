@@ -45,7 +45,10 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@master
+    - name: Checkout project
+      uses: actions/checkout@v4
+      with:
+        path: project
 
     - name: Download SteamCMD
       shell: bash
