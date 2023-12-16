@@ -4,7 +4,7 @@ local function githubError( title, result )
     local format = "::error file=%s,line=%s,title=%s::%s"
     local message = string.format( format, fileName, lineNumber, title, errorMessage )
 
-    local stack = debug.traceback( errorMessage, 3 )
+    local stack = debug.traceback( nil, 3 )
     print( stack, "\n" )
     print( message )
 end
@@ -14,7 +14,7 @@ return function( f, title )
         githubError( title, err )
     end )
 
-    if not ok then
-        os.exit( 1 )
-    end
+    if ok then return end
+
+    os.exit( 1 )
 end
