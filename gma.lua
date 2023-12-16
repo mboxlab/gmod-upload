@@ -1,5 +1,9 @@
-package.path = package.path .. ";{{LIB_PATH}}/?.lua"
-local safeCall = require("runner")
+local libPath = "{{LIB_PATH}}"
+if libPath ~= "{{LIB" .. "_PATH}}" then
+    package.path = package.path .. ";" .. libPath
+end
+
+local safeCall = require("lib/runner")
 
 local OUTPUT_FILE = assert(arg[1], "Missing argument #1 (output file)")
 local ADDON_JSON = assert(arg[2], "Missing argument #2 (path to addon.json)")

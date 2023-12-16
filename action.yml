@@ -60,21 +60,25 @@ runs:
       run: |
         sudo apt-get install lua5.3
 
-        LIB_PATH="${{ github.action_path }}/lib"
-        echo "lib_path=$LIB_PATH" >> "$GITHUB_ENV"
+        # Substitute the placeholder with the full path to the library
+        LIB_PATH=${{ github.action_path }}
+        sed -i "s~{{LIB_PATH}}~$LIB_PATH~g" $LIB_PATH/config.lua
+        sed -i "s~{{LIB_PATH}}~$LIB_PATH~g" $LIB_PATH/gma.lua
 
     - name: Run config builder
       shell: bash
       run: |
         cd ${{ github.action_path }}
 
-        BUILDER="${{ github.action_path }}/config.lua"
-        sed -i "s~{{LIB_PATH}}~$lib_path~g" $BUILDER
-        cat $BUILDER
+        CONFIG_INPUT=${{ inputs.config }}
+        if [ -n "$CONFIG_INPUT" ]; then
+          echo "config_file=$CONFIG_INPUT" >> "$GITHUB_ENV"
+          echo "::notice title=Config file input provided, ignoring all other inputs::$CONFIG_INPUT"
+          exit 0
+        fi
 
         set +e
-        CONFIG_OUTPUT=$(lua5.3 $BUILDER \
-            "${{ inputs.config }}" \
+        CONFIG_OUTPUT=$(lua5.3 config.lua \
             '${{ inputs.title }}' \
             '${{ inputs.type }}' \
             '${{ inputs.tag1 }}' \
@@ -88,19 +92,14 @@ runs:
           echo "$CONFIG_OUTPUT"
           exit 1
         else
-          # Set the path of the addon json in the local environment
-          echo "config_file=$CONFIG_OUTPUT" >> "$GITHUB_ENV"
-          ls -alht
+          # Set the path of the generated addon json in the local environment
+          echo "config_file=${{ github.action_path }}/$CONFIG_OUTPUT" >> "$GITHUB_ENV"
         fi
 
     - name: Run gma packer
       shell: bash
       run: |
-        BUILDER="${{ github.action_path }}/gma.lua"
-        sed -i "s~{{LIB_PATH}}~$lib_path~g" $BUILDER
-        cat $BUILDER
-
-        lua5.3 $BUILDER ${{ inputs.id }}.gma "${{ github.action_path }}/$config_file"
+        lua5.3 ${{ github.action_path }}/gma.lua ${{ inputs.id }}.gma "$config_file"
 
     - name: Create .vdf file
       shell: bash

@@ -1,15 +1,12 @@
-package.path = package.path .. ";{{LIB_PATH}}/?.lua"
-local safeCall = require( "runner" )
+local libPath = "{{LIB_PATH}}"
+if libPath ~= "{{LIB" .. "_PATH}}" then
+    package.path = package.path .. ";" .. libPath
+end
+
+local safeCall = require( "lib/runner" )
 
 local function loadConfig()
-    local json = require( "json" )
-
-    -- If a config file is given, we use that instead of building a new one
-    local CONFIG_FILE = arg[1]
-    if CONFIG_FILE and CONFIG_FILE ~= "" then
-        print( CONFIG_FILE )
-        return
-    end
+    local json = require( "lib/json" )
 
     ---@param list string[]
     ---@return table<string, string>
@@ -22,9 +19,9 @@ local function loadConfig()
         return newList
     end
 
-    local TITLE = assert( arg[2], "No title given" )
+    local TITLE = assert( arg[1], "No title given" )
 
-    local TYPE = assert( arg[3], "No type given" )
+    local TYPE = assert( arg[2], "No type given" )
     do
         local valid = makeLookup( {
             "ServerContent", "gamemode", "map", "weapon", "vehicle", "npc", "tool", "effects", "model", "entity"
@@ -50,9 +47,9 @@ local function loadConfig()
             added[tag] = true
         end
 
+        addTag( arg[3] )
         addTag( arg[4] )
         addTag( arg[5] )
-        addTag( arg[6] )
 
         assert( #TAGS > 0, "No tags given" )
     end
