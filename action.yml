@@ -90,13 +90,12 @@ runs:
                 echo "::error file=${FILE_NAME},line=${LINE_NUMBER}::${ERROR_MESSAGE}"
             fi
 
-            cat << 'EOF' >> $GITHUB_STEP_SUMMARY
-            cat "## :x: Failed to generate an addon.json!" >> $GITHUB_STEP_SUMMARY
-            cat "" >> $GITHUB_STEP_SUMMARY
-            cat "### Error" >> $GITHUB_STEP_SUMMARY
-            cat "```" >> $GITHUB_STEP_SUMMARY
-            cat "$CONFIG_OUTPUT" >> $GITHUB_STEP_SUMMARY
-            cat "```" >> GITHUB_STEP_SUMMARY
+            echo "## :x: Failed to generate an addon.json!" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Error" >> $GITHUB_STEP_SUMMARY
+            echo "```" >> $GITHUB_STEP_SUMMARY
+            echo "$CONFIG_OUTPUT" >> $GITHUB_STEP_SUMMARY
+            echo "```" >> GITHUB_STEP_SUMMARY
 
             exit 1
         fi
