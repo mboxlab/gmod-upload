@@ -59,7 +59,8 @@ runs:
       shell: bash
       run: |
         sudo apt-get install lua5.3
-        mv -v ${{ github.action_path }}/lib /usr/local/share/lua/5.3/
+        mkdir -pv /usr/local/lib/lua/5.3
+        mv -v ${{ github.action_path }}/lib /usr/local/lib/lua/5.3
 
     - name: Run config builder
       shell: bash
