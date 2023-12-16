@@ -79,12 +79,15 @@ runs:
 
         # Handle a nonzero exit code as a lua error
         if [ "$CONFIG_EXIT_STATUS" -ne 0 ]; then
+            echo "got a nonzero exit for config.lua"
             echo $CONFIG_OUTPUT
             exit 1
         fi
 
         # Remove the exit status from the output
         CONFIG=$(echo "$CONFIG_OUTPUT" | head -n -1)
+        echo "first line of config output"
+        echo "$CONFIG"
 
         # Set the path of the addon json in the local environment
         echo "config_file=$CONFIG" >> "$GITHUB_ENV"
