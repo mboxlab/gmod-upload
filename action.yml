@@ -65,7 +65,7 @@ runs:
       run: |
         cd ${{ github.action_path }}
 
-        # Use a subshell to capture both output and exit status
+        set +e
         CONFIG_OUTPUT=$(lua5.3 ${{ github.action_path }}/config.lua \
             "${{ inputs.config }}" \
             '${{ inputs.title }}' \
@@ -73,8 +73,8 @@ runs:
             '${{ inputs.tag1 }}' \
             '${{ inputs.tag2 }}' \
             '${{ inputs.tag3 }}')
-
         CONFIG_EXIT_STATUS=$?
+        set -e
 
         # Handle a nonzero exit code as a lua error
         if [ "$CONFIG_EXIT_STATUS" -ne 0 ]; then
