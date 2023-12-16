@@ -61,9 +61,9 @@ runs:
         sudo apt-get install lua5.3
 
         # Substitute the placeholder with the full path to the library
-        LIB_PATH=${{ github.action_path }}
-        sed -i "s~{{LIB_PATH}}~$LIB_PATH~g" $LIB_PATH/config.lua
-        sed -i "s~{{LIB_PATH}}~$LIB_PATH~g" $LIB_PATH/gma.lua
+        LIB_PATH=${{ github.action_path }}/lib
+        sed -i "s~{{LIB_PATH}}~$LIB_PATH~g" ${{ github.action_path }}/config.lua
+        sed -i "s~{{LIB_PATH}}~$LIB_PATH~g" ${{ github.action_path }}/gma.lua
 
     - name: Run config builder
       shell: bash
