@@ -120,7 +120,7 @@ runs:
         pwd
         ls -alh
         echo "Running GMA with config file: $config_file"
-        echo $(lua5.3 ${{ github.action_path }}/gma.lua ${{ inputs.id }}.gma "$config_file")
+        lua5.3 ${{ github.action_path }}/gma.lua ${{ inputs.id }}.gma "$config_file"
 
     - name: Create .vdf file
       shell: bash

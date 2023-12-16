@@ -236,4 +236,4 @@ local function main()
 	handle:close()
 end
 
-safeCall(main, "Failed to pack addon")
+main()
