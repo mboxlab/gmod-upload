@@ -19,8 +19,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@master
-      - uses: vurv78/gmod-upload@master
+      - uses: actions/checkout@v4
+      - uses: CFC-Servers/gmod-upload@master
         with:
           id: 2466875474
           changelog: "Deployment via Github to latest changes"
@@ -44,8 +44,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@master
-      - uses: vurv78/gmod-upload@master
+      - uses: actions/checkout@v4
+      - uses: CFC-Servers/gmod-upload@master
         with:
           id: 2466875474
           changelog: "Deployment via Github to latest changes"
@@ -68,8 +68,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@master
-      - uses: vurv78/gmod-upload@master
+      - uses: actions/checkout@v4
+      - uses: CFC-Servers/gmod-upload@master
         with:
           id: 2466875474
           changelog: "Deployment via Github to latest changes"
