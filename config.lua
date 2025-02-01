@@ -63,6 +63,10 @@ local function loadConfig()
         ignore = { path, ".git/*", ".github/*", "addon.txt" }
     }
 
+    for k, v in pairs( arg ) do
+        print( k, v )
+    end
+
     if arg[6] == "true" then -- ignore lua
         table.insert( config.ignore, "*.lua" )
     end
