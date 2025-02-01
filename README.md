@@ -99,5 +99,6 @@ jobs:
 | `tag1`      | fun                                      | The first tag. Must be one of:<br>```fun, roleplay, scenic, movie, realism, cartoon, water, comic, build```<br><br>:warning: This input will be ignored if the `config` input is used.                                                                                                        |
 | `tag2`      | roleplay                                 | The second tag (Optional). Must be one of:<br>```fun, roleplay, scenic, movie, realism, cartoon, water, comic, build```<br><br>:warning: This input will be ignored if the `config` input is used.                                                                                            |
 | `tag3`      | realism                                  | The third tag (Optional). Must be one of:<br>```fun, roleplay, scenic, movie, realism, cartoon, water, comic, build```<br><br>:warning: This input will be ignored if the `config` input is used.                                                                                             |
+| `remove_lua`  | true                                     | If set to `true`, will the remove the `lua` folder from the uploaded files. default is `false` |
 
 </details>
