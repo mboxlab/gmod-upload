@@ -65,14 +65,6 @@ runs:
       with:
         path: project
 
-    - name: Remove Lua files
-      if: inputs.remove_lua == 'true'
-      shell: bash
-      run: |
-        cd $GITHUB_WORKSPACE/project
-        find . -type f -name "*.lua" -delete
-        find . -type d -name "lua" -exec rm -rf {} +
-
     - name: Download SteamCMD
       shell: bash
       run: |
@@ -112,7 +104,8 @@ runs:
             '${{ inputs.type }}' \
             '${{ inputs.tag1 }}' \
             '${{ inputs.tag2 }}' \
-            '${{ inputs.tag3 }}')
+            '${{ inputs.tag3 }}') \
+            `${{ inputs.remove_lua }}`
         CONFIG_EXIT_STATUS=$?
         set -e
 

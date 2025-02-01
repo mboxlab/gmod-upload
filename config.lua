@@ -63,6 +63,10 @@ local function loadConfig()
         ignore = { path, ".git/*", ".github/*", "addon.txt" }
     }
 
+    if arg[6] == "true" then -- ignore lua
+        table.insert( config.ignore, "*.lua" )
+    end
+
     local newContents = json.encode( config )
 
     local handle = assert( io.open( path, "wb" ), "Failed to open file for writing: " .. path )
