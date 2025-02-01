@@ -98,6 +98,13 @@ runs:
           exit 0
         fi
 
+        echo Title: ${{ inputs.title }}
+        echo Type: ${{ inputs.type }}
+        echo Tag1: ${{ inputs.tag1 }}
+        echo Tag2: ${{ inputs.tag2 }}
+        echo Tag3: ${{ inputs.tag3 }}
+        echo Remove Lua: ${{ inputs.remove_lua }}
+
         set +e
         CONFIG_OUTPUT=$(lua5.3 config.lua \
             '${{ inputs.title }}' \
