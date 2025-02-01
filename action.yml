@@ -65,6 +65,14 @@ runs:
       with:
         path: project
 
+    - name: Remove Lua files
+      if: inputs.remove_lua == 'true'
+      shell: bash
+      run: |
+        cd $GITHUB_WORKSPACE/project
+        find . -type f -name "*.lua" -delete
+        find . -type d -name "lua" -exec rm -rf {} +
+
     - name: Download SteamCMD
       shell: bash
       run: |
@@ -123,14 +131,6 @@ runs:
       run: |
         cd $GITHUB_WORKSPACE/project
         lua5.3 ${{ github.action_path }}/gma.lua $GITHUB_WORKSPACE/project/${{ inputs.id }}.gma "$config_file"
-
-    - name: Remove Lua files
-      if: inputs.remove_lua == 'true'
-      shell: bash
-      run: |
-        cd $GITHUB_WORKSPACE/project
-        find . -type f -name "*.lua" -delete
-        find . -type d -name "lua" -exec rm -rf {} +
 
     - name: Create .vdf file
       shell: bash
