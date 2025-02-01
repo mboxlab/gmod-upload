@@ -74,10 +74,6 @@ local function loadConfig()
     handle:close()
 
     print( path )
-
-    for k, v in pairs( arg ) do
-        print( k, v )
-    end
 end
 
 safeCall( loadConfig, "Failed to process addon config" )
