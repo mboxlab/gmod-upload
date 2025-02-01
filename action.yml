@@ -111,8 +111,8 @@ runs:
             '${{ inputs.type }}' \
             '${{ inputs.tag1 }}' \
             '${{ inputs.tag2 }}' \
-            '${{ inputs.tag3 }}') \
-            `${{ inputs.remove_lua }}`
+            '${{ inputs.tag3 }}' \
+            `${{ inputs.remove_lua }})`
         CONFIG_EXIT_STATUS=$?
         set -e
 
