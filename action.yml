@@ -151,8 +151,9 @@ runs:
       run: |
         mkdir -p "~/Steam/config"
         echo "Copying ~/Steam/config/config.vdf..."
-        echo "$STEAM_CONFIG_VDF" > "~/Steam/config/config.vdf"
+        cat > "~/Steam/config/config.vdf" << EOF $STEAM_CONFIG_VDF EOF
         chmod 777 "~/Steam/config/config.vdf"
+        ~/Steam/steamcmd.sh +login "$steam_username" +quit;
         ~/Steam/steamcmd.sh +login $STEAM_USERNAME +workshop_build_item $GITHUB_WORKSPACE/project/workshop.vdf +quit
 
     - name: Print Errors
