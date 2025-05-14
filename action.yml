@@ -149,11 +149,9 @@ runs:
     - name: Run SteamCMD
       shell: bash
       run: |
-        mkdir -p "~/Steam/config"
+        mkdir "~/Steam/config"
         echo "Copying ~/Steam/config/config.vdf..."
-        cat > "~/Steam/config/config.vdf" << EOF $STEAM_CONFIG_VDF EOF
-        chmod 777 "~/Steam/config/config.vdf"
-        ~/Steam/steamcmd.sh +login "$steam_username" +quit;
+        echo "$STEAM_CONFIG_VDF" > "~/Steam/config/config.vdf"
         ~/Steam/steamcmd.sh +login $STEAM_USERNAME +workshop_build_item $GITHUB_WORKSPACE/project/workshop.vdf +quit
 
     - name: Print Errors
