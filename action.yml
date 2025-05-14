@@ -149,10 +149,11 @@ runs:
     - name: Run SteamCMD
       shell: bash
       run: |
-        mkdir "~/Steam/config"
-        echo "Copying ~/Steam/config/config.vdf..."
-        echo "$STEAM_CONFIG_VDF" > "~/Steam/config/config.vdf"
-        ~/Steam/steamcmd.sh +login $STEAM_USERNAME +workshop_build_item $GITHUB_WORKSPACE/project/workshop.vdf +quit
+        cd ~/Steam
+        mkdir "./config"
+        echo "Copying config/config.vdf..."
+        echo "$STEAM_CONFIG_VDF" > "./config/config.vdf"
+        ./steamcmd.sh +login $STEAM_USERNAME +workshop_build_item $GITHUB_WORKSPACE/project/workshop.vdf +quit
 
     - name: Print Errors
       if: failure()
