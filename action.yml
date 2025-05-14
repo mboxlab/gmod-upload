@@ -152,7 +152,7 @@ runs:
         mkdir -p "~/Steam/config"
         echo $STEAM_CONFIG_VDF > "~/Steam/config/config.vdf"
         chmod 777 "~/Steam/config/config.vdf"
-        ~/Steam/steamcmd.sh +login $STEAM_USERNAME $STEAM_PASSWORD +workshop_build_item $GITHUB_WORKSPACE/project/workshop.vdf +quit
+        ~/Steam/steamcmd.sh +login $STEAM_USERNAME +workshop_build_item $GITHUB_WORKSPACE/project/workshop.vdf +quit
 
     - name: Print Errors
       if: failure()
