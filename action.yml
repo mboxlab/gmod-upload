@@ -149,8 +149,8 @@ runs:
     - name: Run SteamCMD
       shell: bash
       run: |
-        mkdir -p "~/Steam/config"
-        echo $STEAM_CONFIG_VDF > "~/Steam/config/config.vdf"
+        echo "Copying ~/Steam/config/config.vdf..."
+        echo "$STEAM_CONFIG_VDF" > "~/Steam/config/config.vdf"
         chmod 777 "~/Steam/config/config.vdf"
         ~/Steam/steamcmd.sh +login $STEAM_USERNAME +workshop_build_item $GITHUB_WORKSPACE/project/workshop.vdf +quit
 
